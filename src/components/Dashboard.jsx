@@ -32,7 +32,7 @@ function Dashboard() {
   });
 
   useEffect(() => {
-    if (!user) navigate("/");
+    if (!user) navigate("/login");
   }, [user]); // eslint-disable-line
 
   function uploadFile(e) {
