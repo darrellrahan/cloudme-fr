@@ -14,7 +14,7 @@ function BreadCrumbs({ currentFolder }) {
           key={folder.id}
           style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
         >
-          <Link to={folder.id ? `/folder/${folder.id}` : "/"}>
+          <Link to={folder.id ? `/folder/${folder.id}` : "/incoming"}>
             {folder.name}
           </Link>
           <span>/</span>
