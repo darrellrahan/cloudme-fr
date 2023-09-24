@@ -32,12 +32,21 @@ export const storage = getStorage(app);
 export const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-async function addFolder(name, uid, currentFolder, path) {
+async function addFolder(
+  jenisSurat,
+  nomorSurat,
+  namaInstansi,
+  uid,
+  currentFolder,
+  path
+) {
   if (currentFolder === null) return;
 
   try {
     await addDoc(collection(db, "folders"), {
-      name: name,
+      jenisSurat: jenisSurat,
+      nomorSurat: nomorSurat,
+      namaInstansi: namaInstansi,
       uid: uid,
       parentId: currentFolder.id,
       path: path,

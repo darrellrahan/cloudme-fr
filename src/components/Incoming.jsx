@@ -35,6 +35,8 @@ function Incoming() {
     error: false,
   });
 
+  const surat = childFolders.filter((data) => data.jenisSurat === "incoming");
+
   function uploadFile(e) {
     const file = e.target.files[0];
     if (!folder || !file) return;
@@ -107,7 +109,7 @@ function Incoming() {
       <section id="incoming">
         <div className="dashboard">
           <div className="justify-between">
-            <BreadCrumbs currentFolder={folder} />
+            <BreadCrumbs currentFolder={folder} jenisSurat="Surat Masuk" />
             <div style={{ display: "flex", gap: "0.5rem" }}>
               <label className="add-btn">
                 <AiFillFileAdd />
@@ -134,19 +136,19 @@ function Incoming() {
           <div className="bg-white shadow rounded-lg text-[#012970]">
             <div className="grid grid-cols-3 px-6 py-4 text-lg font-semibold">
               <div className="flex items-center gap-4">
-                <span>Nama</span>
+                <span>Nomor Surat</span>
                 <button>
                   <BsChevronDown />
                 </button>
               </div>
               <div className="flex items-center gap-4">
-                <span>Diubah</span>
+                <span>Nama Instansi</span>
                 <button>
                   <BsChevronDown />
                 </button>
               </div>
               <div className="flex items-center gap-4">
-                <span>Ukuran File</span>
+                <span>Tanggal Dibuat</span>
                 <button>
                   <BsChevronDown />
                 </button>
@@ -168,21 +170,30 @@ function Incoming() {
                   <p>512 mb</p>
                 </Link>
               ))}
-            {childFolders.length > 0 &&
-              childFolders.map((childFolder) => (
-                <Link
-                  key={childFolder.id}
-                  className="w-full grid grid-cols-3 px-6 py-4 hover:bg-[#DAE9FF] duration-200 ease-linear"
-                  to={`/folder/${childFolder.id}`}
-                >
-                  <div className="flex items-center gap-3 text-lg font-medium">
-                    <AiFillFolder fontSize="1.75rem" />
-                    <span>{childFolder.name}</span>
-                  </div>
-                  <p>2 jam yang lalu</p>
-                  <p>512 mb</p>
-                </Link>
-              ))}
+            {surat.length > 0 &&
+              surat.map((childFolder) => {
+                const date = new Date(childFolder.createdAt?.seconds * 1000);
+
+                return (
+                  <Link
+                    key={childFolder.id}
+                    className="w-full grid grid-cols-3 px-6 py-4 hover:bg-[#DAE9FF] duration-200 ease-linear"
+                    to={`/folder/${childFolder.id}`}
+                  >
+                    <p>{childFolder.nomorSurat}</p>
+                    <div className="flex items-center gap-3 text-lg font-medium">
+                      <AiFillFolder fontSize="1.75rem" />
+                      <span>{childFolder.namaInstansi}</span>
+                    </div>
+                    <p>
+                      {`${date.getDate()} ${date.toLocaleDateString("en-US", {
+                        month: "short",
+                        year: "numeric",
+                      })}, ${date.getHours()}:${date.getMinutes()}`}
+                    </p>
+                  </Link>
+                );
+              })}
           </div>
           {uploadFileState.name || uploadFileState.progress ? (
             <div className="progress">

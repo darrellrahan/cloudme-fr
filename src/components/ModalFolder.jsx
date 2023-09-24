@@ -5,17 +5,22 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 function ModalFolder({ isModal, setIsModal, folder }) {
   const [user] = useAuthState(auth);
-  const [folderName, setFolderName] = useState("");
+  const [jenisSurat, setJenisSurat] = useState("");
+  const [nomorSurat, setNomorSurat] = useState("");
+  const [namaInstansi, setNamaInstansi] = useState("");
 
   function addFolderLocal() {
-    if (folderName === "") alert("fill folder name!");
+    if (jenisSurat === "" || nomorSurat === "" || namaInstansi === "")
+      alert("Semua field wajib diisi!");
     else {
       const path = [...folder.path];
       if (folder !== ROOT_FOLDER) {
         path.push({ name: folder.name, id: folder.id });
       }
-      addFolder(folderName, user.uid, folder, path);
-      setFolderName("");
+      addFolder(jenisSurat, nomorSurat, namaInstansi, user.uid, folder, path);
+      setJenisSurat("");
+      setNomorSurat("");
+      setNamaInstansi("");
       setIsModal(false);
     }
   }
@@ -26,11 +31,26 @@ function ModalFolder({ isModal, setIsModal, folder }) {
     <div className="modal-overlay">
       <div className="modal-container">
         <h2>Add Folder</h2>
+        <select onChange={(e) => setJenisSurat(e.target.value)}>
+          <option value="" disabled selected>
+            Pilih jenis surat
+          </option>
+          <option value="incoming">Surat Masuk</option>
+          <option value="outgoing">Surat Keluar</option>
+        </select>
         <input
           type="text"
-          onChange={(e) => setFolderName(e.target.value)}
-          value={folderName}
-          placeholder="Enter Folder Name"
+          onChange={(e) => setNomorSurat(e.target.value)}
+          value={nomorSurat}
+          placeholder="Nomor surat"
+          style={{ width: "100%" }}
+          className="folder-name-input"
+        />
+        <input
+          type="text"
+          onChange={(e) => setNamaInstansi(e.target.value)}
+          value={namaInstansi}
+          placeholder="Nama Instansi"
           style={{ width: "100%" }}
           className="folder-name-input"
         />
