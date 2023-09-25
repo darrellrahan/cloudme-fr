@@ -19,7 +19,7 @@ import {
 import MainLayout from "./MainLayout";
 import { BsChevronDown, BsPlus } from "react-icons/bs";
 
-function Incoming() {
+function Outgoing() {
   const { folderId } = useParams();
   const [user] = useAuthState(auth);
   const { folder, childFolders, childFiles } = useFolder(folderId);
@@ -31,7 +31,7 @@ function Incoming() {
   });
   const location = useLocation();
 
-  const surat = childFolders.filter((data) => data.jenisSurat === "incoming");
+  const surat = childFolders.filter((data) => data.jenisSurat === "outgoing");
 
   function uploadFile(e) {
     const file = e.target.files[0];
@@ -107,11 +107,11 @@ function Incoming() {
       <section id="incoming">
         <div>
           <div className="flex items-center justify-between mb-8">
-            <BreadCrumbs currentFolder={folder} jenisSurat="Surat Masuk" />
+            <BreadCrumbs currentFolder={folder} jenisSurat="Surat Keluar" />
             <div>
               <label
                 className={`bg-[#012970] px-3 py-2 text-white flex gap-1 items-center rounded-lg text-lg hover:scale-90 duration-300 ease-linear cursor-pointer ${
-                  location.pathname === "/incoming" ? "hidden" : "inline"
+                  location.pathname === "/outgoing" ? "hidden" : "inline"
                 }`}
               >
                 <BsPlus fontSize="1.75rem" />
@@ -129,7 +129,7 @@ function Incoming() {
               <button
                 onClick={() => setIsModal(true)}
                 className={`bg-[#012970] px-3 py-2 text-white flex gap-1 items-center rounded-lg text-lg hover:scale-90 duration-300 ease-linear ${
-                  location.pathname === "/incoming" ? "inline" : "hidden"
+                  location.pathname === "/outgoing" ? "inline" : "hidden"
                 }`}
               >
                 <BsPlus fontSize="1.75rem" />
@@ -143,10 +143,10 @@ function Incoming() {
             folder={folder}
           />
           <div className="bg-white shadow rounded-lg text-[#012970]">
-            {location.pathname === "/incoming" && surat.length === 0 && (
+            {location.pathname === "/outgoing" && surat.length === 0 && (
               <p className="p-8 text-lg text-center">Surat masih kosong</p>
             )}
-            {location.pathname !== "/incoming" && childFiles.length === 0 && (
+            {location.pathname !== "/outgoing" && childFiles.length === 0 && (
               <p className="p-8 text-lg text-center">Lampiran masih kosong</p>
             )}
             {childFiles.length > 0 || surat.length > 0 ? (
@@ -154,7 +154,7 @@ function Incoming() {
                 <div className="grid grid-cols-3 gap-16 px-6 py-4 text-lg font-semibold border-b border-black/20">
                   <div className="flex items-center gap-4">
                     <span>
-                      {location.pathname === "/incoming"
+                      {location.pathname === "/outgoing"
                         ? "Nomor Surat"
                         : "Nama Lampiran"}
                     </span>
@@ -164,7 +164,7 @@ function Incoming() {
                   </div>
                   <div className="flex items-center gap-4">
                     <span>
-                      {location.pathname === "/incoming"
+                      {location.pathname === "/outgoing"
                         ? "Nama Instansi"
                         : "Ukuran Lampiran"}
                     </span>
@@ -213,7 +213,7 @@ function Incoming() {
                       <Link
                         key={childFolder.id}
                         className="w-full grid grid-cols-3 gap-16 px-6 py-4 hover:bg-[#DAE9FF] duration-200 ease-linear"
-                        to={`/incoming/${childFolder.id}`}
+                        to={`/outgoing/${childFolder.id}`}
                       >
                         <div className="flex items-center gap-3 text-lg font-medium">
                           <AiFillFolder fontSize="1.75rem" />
@@ -273,4 +273,4 @@ function Incoming() {
   );
 }
 
-export default Incoming;
+export default Outgoing;

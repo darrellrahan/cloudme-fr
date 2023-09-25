@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { addFolder, auth } from "../firebase";
 import { ROOT_FOLDER } from "../hooks/useFolder";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { IoClose } from "react-icons/io5";
 
 function ModalFolder({ isModal, setIsModal, folder }) {
   const [user] = useAuthState(auth);
@@ -28,43 +29,55 @@ function ModalFolder({ isModal, setIsModal, folder }) {
   if (!isModal) return;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-container">
-        <h2>Add Folder</h2>
-        <select onChange={(e) => setJenisSurat(e.target.value)}>
-          <option value="" disabled selected>
-            Pilih jenis surat
-          </option>
-          <option value="incoming">Surat Masuk</option>
-          <option value="outgoing">Surat Keluar</option>
-        </select>
-        <input
-          type="text"
-          onChange={(e) => setNomorSurat(e.target.value)}
-          value={nomorSurat}
-          placeholder="Nomor surat"
-          style={{ width: "100%" }}
-          className="folder-name-input"
-        />
-        <input
-          type="text"
-          onChange={(e) => setNamaInstansi(e.target.value)}
-          value={namaInstansi}
-          placeholder="Nama Instansi"
-          style={{ width: "100%" }}
-          className="folder-name-input"
-        />
-        <div className="justify-between">
-          <div></div>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
-            <button
-              className="green-outline-btn"
-              onClick={() => setIsModal(false)}
+    <div className="fixed inset-0 bg-black/75 z-[1000]">
+      <div className="absolute w-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1001]">
+        <div className="flex justify-between items-center bg-[#012970] rounded-t-lg text-white px-6 py-3 text-xl">
+          <h3>Surat Baru</h3>
+          <button onClick={() => setIsModal(false)}>
+            <IoClose className="text-2xl" />
+          </button>
+        </div>
+        <div className="bg-white rounded-b-lg p-6 flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="jenis-surat">Jenis Surat</label>
+            <select
+              id="jenis-surat"
+              onChange={(e) => setJenisSurat(e.target.value)}
+              className="border border-black/20 rounded-lg p-2"
             >
-              Close
-            </button>
-            <button className="green-primary-btn" onClick={addFolderLocal}>
-              Add Folder
+              <option value="" disabled selected>
+                Pilih jenis surat
+              </option>
+              <option value="incoming">Surat Masuk</option>
+              <option value="outgoing">Surat Keluar</option>
+            </select>
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="nomor-surat">Nomor Surat</label>
+            <input
+              id="nomor-surat"
+              type="text"
+              onChange={(e) => setNomorSurat(e.target.value)}
+              className="border border-black/20 rounded-lg p-2"
+              value={nomorSurat}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="nama-instansi">Nama Instansi</label>
+            <input
+              id="nama-instansi"
+              type="text"
+              onChange={(e) => setNamaInstansi(e.target.value)}
+              className="border border-black/20 rounded-lg p-2"
+              value={namaInstansi}
+            />
+          </div>
+          <div className="mt-2">
+            <button
+              className="bg-[#012970] text-white rounded-lg py-2 px-4 text-lg w-full"
+              onClick={addFolderLocal}
+            >
+              Buat Surat
             </button>
           </div>
         </div>

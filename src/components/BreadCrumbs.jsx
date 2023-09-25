@@ -10,14 +10,17 @@ function BreadCrumbs({ currentFolder, jenisSurat }) {
   if (currentFolder) path = [...path, ...currentFolder.path];
 
   return (
-    <div className="breadcrumbs">
+    <div className="flex gap-2 text-[#012970] text-xl font-medium">
       {currentFolder?.name === jenisSurat && <p>{jenisSurat}</p>}
       {path.map((folder) => (
         <div
           key={folder.id}
           style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
         >
-          <Link to={folder.id ? `/folder/${folder.id}` : "/incoming"}>
+          <Link
+            className="hover:underline"
+            to={`${jenisSurat === "Surat Masuk" ? "/incoming" : "/outgoing"}`}
+          >
             {folder.name}
           </Link>
           <span>/</span>
