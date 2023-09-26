@@ -1,21 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { sidebar } from "../dry";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 function Sidebar() {
-  const [user, loading] = useAuthState(auth);
-  const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    if (!user && !loading) navigate("/login");
-  }, [user]); // eslint-disable-line
 
   return (
     <section id="sidebar">
