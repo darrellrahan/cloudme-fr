@@ -2,7 +2,6 @@ import React from "react";
 import Logo from "./Logo";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { signOut } from "firebase/auth";
 import search from "../assets/search.svg";
 
 function Header() {
@@ -23,17 +22,9 @@ function Header() {
             style={{ backgroundImage: `url('${search}')` }}
           />
         </div>
-        <div className="flex items-center gap-8">
-          <div>
-            <h4 className="text-xl text-[#012970]">{user?.displayName}</h4>
-            <p className="text-[#808080]">{user?.email}</p>
-          </div>
-          <button
-            onClick={() => signOut(auth)}
-            className="text-[#808080] duration-300 ease-linear hover:opacity-50"
-          >
-            Logout
-          </button>
+        <div className="text-right">
+          <h4 className="text-xl text-[#012970]">{user?.displayName}</h4>
+          <p className="text-[#808080]">{user?.email}</p>
         </div>
       </header>
     </section>
